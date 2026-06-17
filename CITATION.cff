@@ -1,13 +1,9 @@
 cff-version: 1.2.0
-title: "Bridget Riley's Waves: A Harmonic Analysis"
 message: "If you use this work, please cite it as follows."
-type: report
 authors:
-  - family-names: Levin
-    given-names: Golan
-date-released: 2026-06-17
-url: https://github.com/golanlevin/riley_wave_analysis
-abstract: >
-  Fourier analysis of wave contours in selected paintings by Bridget Riley,
-  examining sinusoidality, harmonic distortion, and evidence for template-based
-  construction methods.
+  - family-names: "Levin"
+    given-names: "Golan"
+title: "Bridget Riley's Waves: A Harmonic Analysis"
+date-released: "2026-06-17"
+url: "https://github.com/golanlevin/riley_wave_analysis"
+abstract: "Fourier analysis of wave contours in selected paintings by Bridget Riley, examining sinusoidality, harmonic distortion, and evidence for template-based construction methods."
