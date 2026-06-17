@@ -27,8 +27,15 @@ Outputs: out/<tag>_analysis.png per painting, out/similarity.png, and
 tables on stdout.  See readme.md for the findings.
 """
 
+import os
+
 import numpy as np
 import cv2
+
+# Keep matplotlib's font cache inside the project when the user home cache is
+# not writable in the sandbox.
+os.environ.setdefault("MPLCONFIGDIR", ".mplconfig")
+
 import matplotlib
 
 matplotlib.use("Agg")  # headless: we only save PNGs, never open a window
@@ -172,7 +179,10 @@ def analyse_edge(x, y_img, nharm=NHARM):
     # Pure-sine comparison: same fit with the fundamental only.  Its
     # residual is the total deviation from the best possible sine.
     _, rms_sine = fit_at_lambda(x, y, lam, 1)
+    drift_slope = float(coef[1])  # y-up pixels per x pixel
+    drift_span = drift_slope * (x[-1] - x[0])
     return dict(x=x, y=y, lam=lam, nper=nper, c=c, psi=psi, phi1=phi[0],
+                drift_slope=drift_slope, drift_span=drift_span,
                 rms_full=rms, rms_sine=rms_sine,
                 # total harmonic distortion: harmonic power above the
                 # fundamental, as a fraction of the fundamental
@@ -212,6 +222,8 @@ def analyse_image(path, tag, outdir="out", min_width_frac=0.90):
     thd = np.array([r["thd"] for r in results])
     rms_sine = np.array([r["rms_sine"] for r in results])
     rms_full = np.array([r["rms_full"] for r in results])
+    drift_slope = np.array([r["drift_slope"] for r in results])
+    drift_span = np.array([r["drift_span"] for r in results])
 
     # Aligned phases psi_n averaged across copies.  Circular mean (angles
     # wrap) weighted by each copy's harmonic amplitude, so copies in which
@@ -232,6 +244,10 @@ def analyse_image(path, tag, outdir="out", min_width_frac=0.90):
           f"mean fundamental amplitude c1: {c1_mean:6.1f} px")
     print(f"  periods per copy: "
           f"{min(r['nper'] for r in results):.1f}-{max(r['nper'] for r in results):.1f}")
+    print(f"  fitted linear drift per copy: {drift_span.mean():+.2f} px "
+          f"({100 * drift_span.mean() / c1_mean:+.1f}% of c1), "
+          f"slope {drift_slope.mean():+.5f} px/px "
+          f"(image-y slope {-drift_slope.mean():+.5f})")
     print(f"\n  Fourier series (canonical, fundamental phase = 0):")
     print(f"     y(t) = sum_n  c_n * cos(n*t - psi_n),   t = 2*pi*x/lambda")
     print(f"  {'n':>3} {'c_n/c_1':>9} {'+/-':>7} {'c_n/c_1 dB':>11} "
@@ -366,7 +382,7 @@ def similarity_analysis(all_results, outdir="out"):
     distributions are comparable between paintings.
     """
     tags = list(all_results)
-    fig = plt.figure(figsize=(15, 9))
+    fig = plt.figure(figsize=(max(15, 3.2 * len(tags)), 9))
     gs = fig.add_gridspec(2, len(tags), height_ratios=[1.15, 1])
 
     print(f"\n{'=' * 74}\nwithin-painting curve similarity "
@@ -406,7 +422,7 @@ def similarity_analysis(all_results, outdir="out"):
     # copy deviates its own way.
     ax = fig.add_subplot(gs[1, :])
     bins = np.linspace(-1, 1, 81)
-    colors = dict(zip(tags, ["tab:orange", "tab:green", "tab:blue"]))
+    colors = {tag: f"C{k}" for k, tag in enumerate(tags)}
     for tag in tags:
         ax.hist(dists[tag], bins=bins, density=True, histtype="stepfilled",
                 alpha=0.35, color=colors[tag], label=f"{tag} "
@@ -447,12 +463,73 @@ def similarity_analysis(all_results, outdir="out"):
                   f"mirrored r = {pearson(means[ta], means[tb][::-1]):+.2f}")
 
 
+# ----------------------------------------------------------------------
+# summary timeline
+# ----------------------------------------------------------------------
+
+def thd_timeline(all_results, outdir="out"):
+    """Plot mean total harmonic distortion for the analysed Riley works."""
+    meta = {
+        "polarity_study": (1964.00, "Study for\nPolarity"),
+        "polarity": (1964.18, "Polarity"),
+        "arrest": (1965.00, "Study for\nArrest Series"),
+        "cataract3": (1967.00, "Cataract 3"),
+        "gala": (1974.00, "Gala"),
+    }
+    rows = []
+    for tag, (year, label) in meta.items():
+        thd = 100 * np.array([r["thd"] for r in all_results[tag]])
+        rows.append((year, label, thd.mean(), thd.min(), thd.max()))
+    rows.sort()
+
+    years = np.array([r[0] for r in rows])
+    labels = [r[1] for r in rows]
+    means = np.array([r[2] for r in rows])
+    lows = means - np.array([r[3] for r in rows])
+    highs = np.array([r[4] for r in rows]) - means
+
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    ax.errorbar(years, means, yerr=[lows, highs], fmt="o", ms=8,
+                lw=1.5, capsize=4, color="black", ecolor="0.45",
+                label="mean THD; whiskers = per-copy range")
+    ax.plot(years, means, color="0.65", lw=1, zorder=0)
+    for year, label, mean, high in zip(years, labels, means, highs):
+        ax.text(year, mean + high + 0.25, f"{label}\n{mean:.1f}%",
+                ha="center", va="bottom", fontsize=9,
+                bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=1.5))
+
+    ax.set_xlim(1963.5, 1974.7)
+    ax.set_ylim(0, max(means + highs) + 1.8)
+    ax.set_xticks([1964, 1965, 1967, 1974])
+    ax.set_xlabel("year")
+    ax.set_ylabel("total harmonic distortion, harmonics 2-12 (%)")
+    ax.set_title("Total harmonic distortion in Bridget Riley wave works, 1964-1974")
+    ax.grid(axis="y", color="0.88", lw=0.8)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.legend(loc="upper right", frameon=False, fontsize=9)
+    fig.tight_layout()
+    out = f"{outdir}/thd_timeline.png"
+    fig.savefig(out, dpi=160)
+    plt.close(fig)
+
+    print(f"\n{'=' * 74}\nTHD timeline")
+    for _, label, mean, lo, hi in rows:
+        print(f"  {label.replace(chr(10), ' '):>24}: {mean:.2f}% "
+              f"(per copy {lo:.2f}-{hi:.2f}%)")
+    print(f"  figure: {out}")
+
+
 if __name__ == "__main__":
-    import os
     os.makedirs("out", exist_ok=True)
     all_results = {
         "arrest": analyse_image("images/riley_arrest.jpg", "arrest"),
         "cataract3": analyse_image("images/riley_cataract3.jpg", "cataract3"),
         "gala": analyse_image("images/riley_gala.jpg", "gala"),
+        "polarity_study": analyse_image("images/riley_polarity_study.jpg",
+                                         "polarity_study", min_width_frac=0.70),
+        "polarity": analyse_image("images/riley_polarity.png",
+                                  "polarity", min_width_frac=0.70),
     }
-    similarity_analysis(all_results)
+    thd_timeline(all_results)
+    similarity_tags = ("arrest", "cataract3", "gala")
+    similarity_analysis({tag: all_results[tag] for tag in similarity_tags})
