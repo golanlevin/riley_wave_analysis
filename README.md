@@ -352,3 +352,5 @@ Phase-coherent harmonics:
 Across the two 1964 works, the analysis suggests that Riley was not yet pursuing the near-perfect sinusoidal forms seen in the later curve paintings. Instead, both works employ a distinctive waveform with strong, highly coherent harmonic structure. Whatever construction method generated these curves, it was applied consistently throughout each composition. By 1967, however, Riley's waveforms had become dramatically more sinusoidal, marking a clear shift in both their geometric character as well as their precision.
 
 ---
+
+<!-- codex resume 019ed265-d3d7-7683-bdc4-b02dad3c8d00 -->
