@@ -13,6 +13,7 @@ Golan Levin, June 2026
 * [Results](#results)
 * [Evidence for Riley's Use of Templates](#evidence-for-rileys-use-of-templates)
 * [Analysis of *Polarity* (1964)](#analysis-of-polarity-1964)
+* [Citation](#citation)
 
 ---
 
@@ -260,7 +261,7 @@ method, but are not included in the `similarity.png` figure above.
 
 The two 1964 *Polarity* works behave differently from the later wave paintings discussed above. Rather than appearing as highly accurate sine waves, they exhibit a distinctive and repeatable waveform with substantially stronger harmonic content. Their deviations from a pure sine are not random drawing errors: they recur with remarkable consistency across hundreds of copies of the wave, indicating the purposeful and deliberate design of the underlying shape.
 
-In retrospect, the *Polarity* curves appear less like imperfect sines than like a different waveform altogether. Compared to the near-sinusoidal contours of *Cataract 3* and *Gala*, they possess broader peaks and troughs and a more visibly "constructed" profile. The Fourier analysis confirms this impression, revealing strong, phase-coherent higher harmonics that are largely absent from the later works.
+Compared to Riley's later works, the *Polarity* curves appear less like imperfect sines than like a different waveform altogether. Compared to the near-sinusoidal contours of *Cataract 3* and *Gala*, they possess broader peaks and troughs and a more visibly "constructed" profile. The Fourier analysis confirms this impression, revealing strong, phase-coherent higher harmonics that are largely absent from the later works.
 
 The analysis model includes an independent linear drift term for every traced edge, so the reported harmonic content is measured after removing each wave's overall shear.
 
@@ -351,7 +352,16 @@ Phase-coherent harmonics:
 | 8 | 0.002 ± 0.001 | −56.5 | −138° | 0.95 |
 | 10 | 0.001 ± 0.000 | −59.5 | +35° | 0.93 |
 
-Across the two 1964 works, the analysis suggests that Riley was not yet pursuing the near-perfect sinusoidal forms seen in the later curve paintings. Instead, both works employ a distinctive waveform with strong, highly coherent harmonic structure. Whatever construction method generated these curves, it was applied consistently throughout each composition. By 1967, however, Riley's waveforms had become dramatically more sinusoidal, marking a clear shift in both their geometric character as well as their precision.
+Across the two 1964 works, the analysis suggests that Riley was not yet pursuing the near-perfect sinusoidal forms seen in the later curve paintings. Instead, both works employ a distinctive, personal waveform with strong, highly coherent harmonic structure. Whatever construction method generated these curves, it was applied consistently throughout each composition. By 1967, however, Riley's waveforms had become dramatically more sinusoidal, marking a clear shift in both their geometric character as well as their precision.
+
+---
+
+## Citation
+
+If you use this work, please cite the repository using the GitHub
+"Cite this repository" button, the metadata in [`CITATION.cff`](CITATION.cff), or this line:
+
+> Levin, G. (2026). *Bridget Riley's Waves: A Harmonic Analysis* [Computer software and research report]. GitHub. [https://github.com/golanlevin/riley_wave_analysis](https://github.com/golanlevin/riley_wave_analysis)
 
 ---
 
