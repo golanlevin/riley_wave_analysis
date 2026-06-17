@@ -18,14 +18,16 @@ Golan Levin, June 2026
 
 ## Key Findings
 
-* **Riley's waves became significantly more sinusoidal over time.** The two 1964 *Polarity* works exhibit total harmonic distortion (THD) of approximately 5–6%, indicating visibly shaped and/or hand-drafted waveforms. By contrast, the THD of *Study for Arrest Series* (1965) measures 3.4%, while *Cataract 3* (1967) and *Gala* (1974) achieve just 1.2% and 1.4% respectively. Over the course of a decade, Riley improved her precision in creating pure sine waves by roughly a factor of five.
+* **Riley's waves became significantly more sinusoidal over time.** This appears to have been both a design choice as well as the result of increasing precision in fabrication. In particular: the two 1964 *Polarity* works exhibit total harmonic distortion (THD) of approximately 5–6%, reflecting their purposefully shaped, hand-designed waveforms. By contrast, the THD of *Study for Arrest Series* (1965) measures 3.4%, while *Cataract 3* (1967) and *Gala* (1974) achieve just 1.2% and 1.4% respectively. Over the course of a decade, Riley's precision in creating pure sine waves increased by roughly a factor of five.
 * **By 1967, Riley was producing curves that are extraordinarily close to true mathematical sine waves.** The contours in *Cataract 3* and *Gala* deviate from a perfect sinusoid by little more than 1%, equivalent to the measurement noise floor of the available reproductions. In geometric terms, these contours are *extremely* close to mathematical sine waves.
-* **The waves in *Cataract 3* and *Gala* were demonstrably traced from common master curves.** Across hundreds of traced contours, the same tiny departures from a perfect sine recur with remarkable consistency. Within each painting, the waves are not merely sinusoidal; they are copies of the same slightly imperfect sinusoid, strongly suggesting the use of a transferred master curve or template. This conclusion was independently confirmed by Bridget Riley Archive director, Dr. Natalia Naish, who described the artist's process as involving the creation of a hardboard (Masonite) template from an initial paper drawing, which was subsequently reused throughout the painting.
+* **The waves in these paintings were demonstrably traced from common master curves.** Across hundreds of traced contours, the same tiny departures from a perfect sine recur with remarkable consistency. Within each painting, the waves are not merely sinusoidal; they are copies of the same slightly imperfect sinusoid, strongly suggesting the use of a transferred master curve or template. This conclusion was independently confirmed by Bridget Riley Archive director, Dr. Natalia Naish, who described the artist's process as involving the creation of a hardboard (Masonite) template from an initial paper drawing, which was subsequently reused throughout the painting. The exception to this is the small *Study for Arrest Series*, whose waves may have been created without a repeating template. 
 
 
 ---
 
 ## The Question of Construction
+
+![bridget riley in 1979, (c) getty images](images/bridget_riley_1979_getty.jpg)
 
 [Bridget Riley](https://en.wikipedia.org/wiki/Bridget_Riley) emerged in the early 1960s as one of the leading figures of Op Art, a movement concerned with the systematic exploration of visual perception. Her paintings use carefully organized geometric forms to generate sensations of movement, vibration, and visual instability. Her wave paintings represent one of the clearest expressions of this project. Although these works are often discussed in perceptual or phenomenological terms, relatively little attention has been paid to the exact geometry of the curves themselves. Are they merely wave-like, or are they specific mathematical functions? The answer turns out to be surprisingly precise.
 
@@ -35,7 +37,7 @@ Independent corroboration concerning Riley's studio practice comes from correspo
 
 ![thd_timeline.png](out/thd_timeline.png)
 
-What remains unclear is how Riley generated the initial paper curve. Riley did not use computers (per Dr. Naish), and many of her works predate the advent of affordable scientific calculators in [1972](https://en.wikipedia.org/wiki/HP-35). Nevertheless, several historically plausible drafting methods were available, however. One possibility is a simple geometric construction for creating a sine wave using only a compass, protractor, and straightedge, as demonstrated [in this video](https://www.youtube.com/watch?v=V649YJhyb_8):
+What remains unclear is how Riley generated the initial paper curve. Riley did not use computers or perform calculations (per Dr. Naish), and many of her works in any case predate the advent of affordable scientific calculators in [1972](https://en.wikipedia.org/wiki/HP-35). Nevertheless, several historically plausible drafting methods were available to Riley. One possibility is a simple geometric construction for creating a sine wave using only a compass, protractor, and straightedge, as demonstrated [in this video](https://www.youtube.com/watch?v=V649YJhyb_8):
 
 [![sine_construction.jpg](images/sine_construction.jpg)]((https://www.youtube.com/watch?v=V649YJhyb_8))
 
